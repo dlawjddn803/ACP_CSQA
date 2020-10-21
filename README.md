@@ -76,7 +76,7 @@ Then, prepare vocab dataset
 ```bash
 sh ./scrips/prepare.sh
 ```
-__
+
 ### 1.2 Let's divide our data into a bathches to attach our knowledge graph.
 It will takes some time as we write all the paths of the ACP graph. You will need enoguh space to save the data. (mnt folder would be fine choice)
 ```bash
