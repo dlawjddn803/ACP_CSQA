@@ -7,7 +7,7 @@ from overrides import overrides
 from stog.utils.checks import ConfigurationError
 from stog.utils import lazy_groups_of, add_noise_to_dict_values
 from stog.data.dataset import Batch
-from ACPgraph_for_CommonsenseQA.stog.data.instance import Instance
+from ACP_CSQA.stog.data.instance import Instance
 from stog.data.iterators.data_iterator import DataIterator
 from stog.data.vocabulary import Vocabulary
 

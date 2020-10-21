@@ -11,7 +11,7 @@ from stog.utils.registrable import Registrable
 from stog.utils import is_lazy, lazy_groups_of, ensure_list
 from stog.data.dataset import Batch
 from stog.data.fields import MetadataField
-from ACPgraph_for_CommonsenseQA.stog.data.instance import Instance
+from ACP_CSQA.stog.data.instance import Instance
 from stog.data.vocabulary import Vocabulary
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name

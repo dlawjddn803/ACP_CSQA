@@ -13,7 +13,7 @@ from stog.utils.string import namespace_match
 from stog.utils.params import Params
 from stog.utils.checks import ConfigurationError
 from stog.utils.tqdm import Tqdm
-from ACPgraph_for_CommonsenseQA.stog.data import instance as adi
+from ACP_CSQA.stog.data import instance as adi
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 

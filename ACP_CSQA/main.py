@@ -2,7 +2,7 @@ import logging
 import warnings
 import argparse
 
-from ACPgraph_for_CommonsenseQA.model_params import *
+from ACP_CSQA.model_params import *
 from train import GraphC_QAModel
 
 warnings.filterwarnings(action='ignore')

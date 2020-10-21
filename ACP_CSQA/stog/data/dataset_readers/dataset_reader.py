@@ -1,7 +1,7 @@
 from typing import Iterable, Iterator, Callable
 import logging
 
-from ACPgraph_for_CommonsenseQA.stog.data.instance import Instance
+from ACP_CSQA.stog.data.instance import Instance
 from stog.utils.tqdm import Tqdm
 from stog.utils.checks import ConfigurationError
 from stog.utils.registrable import Registrable

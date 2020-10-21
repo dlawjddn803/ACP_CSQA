@@ -5,10 +5,10 @@ from stog.modules.seq2seq_encoders import Seq2SeqBertEncoder
 from stog.models.model import Model
 from stog.utils.logging import init_logger
 from stog.modules.token_embedders.embedding import Embedding
-from ACPgraph_for_CommonsenseQA.stog.modules.seq2vec_encoders.cnn_encoder import CnnEncoder
+from ACP_CSQA.stog.modules.seq2vec_encoders.cnn_encoder import CnnEncoder
 from stog.modules.seq2seq_encoders.pytorch_seq2seq_wrapper import PytorchSeq2SeqWrapper
 from stog.modules.stacked_bilstm import StackedBidirectionalLstm
-from ACPgraph_for_CommonsenseQA.stog.modules.stacked_lstm import StackedLstm
+from ACP_CSQA.stog.modules.stacked_lstm import StackedLstm
 from stog.modules.decoders.rnn_decoder import InputFeedRNNDecoder
 from stog.modules.attention_layers.global_attention import GlobalAttention
 from stog.modules.attention import DotProductAttention
@@ -16,7 +16,7 @@ from stog.modules.attention import MLPAttention
 from stog.modules.attention import BiaffineAttention
 from stog.modules.input_variational_dropout import InputVariationalDropout
 from stog.modules.decoders.pointer_generator import PointerGenerator
-from ACPgraph_for_CommonsenseQA.stog.modules.decoders.deep_biaffine_graph_decoder import DeepBiaffineGraphDecoder
+from ACP_CSQA.stog.modules.decoders.deep_biaffine_graph_decoder import DeepBiaffineGraphDecoder
 from stog.utils.nn import get_text_field_mask
 from stog.utils.string import START_SYMBOL, END_SYMBOL, find_similar_token
 from stog.data.vocabulary import DEFAULT_OOV_TOKEN, DEFAULT_PADDING_TOKEN

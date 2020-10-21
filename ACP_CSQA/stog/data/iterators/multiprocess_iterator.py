@@ -4,7 +4,7 @@ import logging
 from torch.multiprocessing import Manager, Process, Queue, get_logger
 
 from stog.utils.checks import ConfigurationError
-from ACPgraph_for_CommonsenseQA.stog.data.instance import Instance
+from ACP_CSQA.stog.data.instance import Instance
 from stog.data.iterators.data_iterator import DataIterator, TensorDict
 from stog.data.dataset import Batch
 from stog.data.vocabulary import Vocabulary

@@ -3,7 +3,7 @@ import logging
 import random
 
 from stog.utils import lazy_groups_of
-from ACPgraph_for_CommonsenseQA.stog.data.instance import Instance
+from ACP_CSQA.stog.data.instance import Instance
 from stog.data.iterators.data_iterator import DataIterator
 from stog.data.dataset import Batch
 

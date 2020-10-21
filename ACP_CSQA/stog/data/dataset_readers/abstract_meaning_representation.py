@@ -8,7 +8,7 @@ from stog.data.dataset_readers.amr_parsing.io import AMRIO
 from stog.utils.file import cached_path
 from stog.data.dataset_readers.dataset_reader import DatasetReader
 from stog.data.fields import TextField, SequenceLabelField, MetadataField, Field, AdjacencyField, ArrayField
-from ACPgraph_for_CommonsenseQA.stog.data.instance import Instance
+from ACP_CSQA.stog.data.instance import Instance
 from stog.data.token_indexers import TokenIndexer, SingleIdTokenIndexer
 from stog.data.tokenizers import Token
 from stog.data.tokenizers.bert_tokenizer import AMRBertTokenizer
