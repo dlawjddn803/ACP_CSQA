@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="9a396ae1-d186-4ed1-82f3-052d08ca4346" name="server7" url="http://nlplab.iptime.org">
+        <fileTransfer host="nlplab.iptime.org" port="47022" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="47022" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
