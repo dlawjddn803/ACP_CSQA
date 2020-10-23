@@ -138,8 +138,7 @@ class AMRGraph(object):
                     info['length'] = len(info['edge'])
                     relations[i][j].append(info)
                     # ARG0, ARG1으로 연결된 모든 노드 찾기
-                    for ban in ['ARG0', 'ARG1', 'ARG2', 'ARG3', 'ARG4', 'ARG0_reverse_', 'ARG1_reverse_', 'ARG2_reverse_', 'ARG3_reverse_', 'ARG4_reverse_',]:
-                    # for ban in ['ARG0', 'ARG1','ARG0_reverse_', 'ARG1_reverse_']:
+                    for ban in ['ARG0', 'ARG1','ARG0_reverse_', 'ARG1_reverse_']:
                     # for ban in ['ARG0', 'ARG1','ARG0_reverse_', 'ARG1_reverse_']:
                         if ban in info['edge']:
                             edge_index = [index for index, value in enumerate(info['edge']) if value == ban]
