@@ -20,7 +20,7 @@ Download Artifacts:
 ```
 ./scripts/download_artifacts.sh
 ```
-Download Preprocessed ConceptNet in [here]() and place it in conceptnet folder 
+Download Preprocessed ConceptNet in [here](https://drive.google.com/drive/folders/1bvW1mB1m3u5WHloLp6HP7mHwF4Vm86-a?usp=sharing) and place it in conceptnet folder 
 
 Make QA dataset have fake AMR dataset form (Please check before you run the code)
 ```
