@@ -55,6 +55,7 @@ Then, Make QA dataset sentences' AMR data using [stog](https://github.com/sheng-
 Before u run this code, please make sure you modify config file. 
  
 ```bash
+cd AMR-gs
 python -u -m stog.commands.predict \
     --archive-file ckpt-amr-2.0 \
     --weights-file ckpt-amr-2.0/best.th \
