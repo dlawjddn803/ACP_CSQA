@@ -411,7 +411,7 @@ class GraphC_QAModel(object):
         vocabs['relation'] = Vocab(model_args.relation_vocab, 5, [CLS, rCLS, SEL, TL])
         lexical_mapping = LexicalMap()
 
-        if self.args.encoder_type in ['ACB_dual', 'ACX_dual', 'ACA_dual', 'ACE_dual', 'ACBL_dual', 'ACEL_dual']:
+        if self.args.encoder_:
             vocabs, lexical_mapping = self._prepare_data()
             config_class, model_class, tokenizer_class = MODEL_CLASSES[self.args.encoder_type]
 
