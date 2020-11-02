@@ -270,7 +270,6 @@ def relation_encoder(vocabs, data, train_flag=True):
         _relation_type = torch.from_numpy(_relation_matrix).transpose_(0, 2).long()
 
         B = len(all_relations)
-        # print(B, 'all_relations length')
         _relation_bank = dict()
         _relation_length = dict()
 
@@ -288,11 +287,6 @@ def relation_encoder(vocabs, data, train_flag=True):
 
 
 def cn_relation_encoder(args, vocabs, data, train_flag=True):
-    if train_flag=='Attn':
-        attn = True
-        train_flag=False
-    else:
-        attn = False
 
     data = [x.attribute for x in data]
 
@@ -303,7 +297,6 @@ def cn_relation_encoder(args, vocabs, data, train_flag=True):
 
         for bidx, x, in enumerate(data):
             all_relations = dict()
-            # vocabs에 CLS토큰의 아이디를 만들고 이를 cls_idx로 설정 / 나머지도 비슷
             cls_idx = vocabs['relation'].token2idx(CLS)
             rcls_idx = vocabs['relation'].token2idx(rCLS)
             self_idx = vocabs['relation'].token2idx(SEL)
@@ -315,49 +308,34 @@ def cn_relation_encoder(args, vocabs, data, train_flag=True):
 
             for oidx in range(args.n_answers):
                 n = len(x['cn_concept'][oidx])
-                # brs: [2, 각 concept개수만큼 0이 있는 리스트]
                 brs = [[2] + [0] * (n)]
                 for i in range(n):
                     rs = [1]
                     for j in range(n):
-                        # 각 컨셉 단어마다 다른 모든 단어를 방문하는 path를 all_path에 등록
                         all_path = x['cn_relation'][oidx][str(i)][(str(j))]
-                        # all_path에 등록된 애들 중 random으로 골라 edge 를 path라고 설정
                         path = random.choice(all_path)['edge']
                         if len(path) == 0:  # self loop
                             path = [SEL]
                         if len(path) < 8:  # too long distance
                             path = [TL]
 
-                        # token2idx는 [self.token2idx(i) for i in x] 반환한다.
-                        # 즉, path는 token들로 이루어져 있는 리스트를 idx리스트로 바꾸고,
                         path = tuple(vocabs['relation'].token2idx(path))
-                        # path가 all_relations에 있으면 원래 rtype을 내놓고, 없으면 len(all_relations)를 반환한다.
                         rtype = all_relations.get(path, len(all_relations))
-                        # 만약 all_relations에 없다면, 할당해준다.
                         if rtype == len(all_relations):
                             all_relations[path] = len(all_relations)
-                        # [1]로 되어있던 rs에 점점 rtype이 더해진다. rytpe도 숫자다.
                         rs.append(rtype)
 
                     rs = np.array(rs, dtype=np.int)
-                    # rs를 [2, 각 concept개수만큼 0이 있는 리스트]에 추가하고, 이는 brs가 된다.
-                    # brs는 [2, 각 concept개수만큼 0이 있는 리스트]+ 한 노드에서 다른 노드까지 가는 모든 relation idx 로 된 패스들을 append 한 결과이다.
                     brs.append(rs)
 
-                # [[path1],
-                #  [path2]] 같은 형식
                 brs = np.stack(brs)
-                # 얘를 다시 _relation_type에 모으고
                 _relation_type.append(brs)
-            # Array들의 집합을 텐서로 바꾸어준다.(한 배치 안에있는 모든 relation들 다 담았다.)
-            _relation_type = ArraysToTensor(_relation_type).transpose_(0, 2)  # 얘가 나중에 batch로 반환되는 relation애들이다.
+            _relation_type = ArraysToTensor(_relation_type).transpose_(0, 2)
 
             B = len(all_relations)
             _relation_bank = dict()
             _relation_length = dict()
 
-            # key, value형식으로 나온다.
             for k, v in all_relations.items():
 
                 # relation
@@ -420,15 +398,11 @@ def cn_relation_encoder(args, vocabs, data, train_flag=True):
                             node = path['node']
                             path = path['edge']
 
-                            # print(path['node'])
-
                             if len(path) == 0:  # self loop
                                 path = [SEL]
                             if len(path) > 8:  # too long distance
                                 path = [TL]
                             path = tuple(vocabs['relation'].token2idx(path))
-                            # print('path', path)
-
                             rtype = all_relations.get(path, len(all_relations))
 
                             if rtype == len(all_relations):
@@ -450,20 +424,6 @@ def cn_relation_encoder(args, vocabs, data, train_flag=True):
                         for k, r in enumerate(z):
                             _relation_matrix[b, i, j, k] = r
 
-            if attn:
-                with open("relation_matrix.pkl", "wb") as rb:
-                    pkl.dump(torch.from_numpy(_relation_matrix), rb, protocol=pkl.HIGHEST_PROTOCOL)
-
-                with open("all_relations.pkl", 'wb') as ar:
-                    pkl.dump(all_relations, ar, protocol=pkl.HIGHEST_PROTOCOL)
-
-                with open("relation_vocab.pkl", 'wb') as rv:
-                    pkl.dump([vocabs['relation'].idx2token([y for y in path]) for path, index in all_relations.items()], rv, protocol=pkl.HIGHEST_PROTOCOL)
-
-                with open("all_nodes.pkl", 'wb') as an:
-                    pkl.dump(all_nodes, an, protocol=pkl.HIGHEST_PROTOCOL)
-
-
             _relation_type = torch.from_numpy(_relation_matrix).transpose_(0, 2).long()
 
             B = len(all_relations)
@@ -473,45 +433,27 @@ def cn_relation_encoder(args, vocabs, data, train_flag=True):
             for k, v in all_relations.items():
                 _relation_bank[v] = np.array(k, dtype=np.int)
                 _relation_length[v] = len(k)
-                # print(k, 'k')
-                # print(v, 'v')
+
             _relation_bank = [_relation_bank[i] for i in range(len(all_relations))]
-            # print(len(_relation_bank), 'before transpose')
 
             _relation_length = [_relation_length[i] for i in range(len(all_relations))]
             _relation_bank = ArraysToTensor(_relation_bank).t_()
-            # print(_relation_bank.size())
             _relation_length = torch.LongTensor(_relation_length)
 
             _cn_relation_bank_total.append(_relation_bank)
             _cn_relation_length_total.append(_relation_length)
             _cn_relation_type_total.append(_relation_type)
-        # print(_cn_relation_bank_total[0].size(), 'len(cn_relation_bank)')
     return _cn_relation_type_total,_cn_relation_bank_total, _cn_relation_length_total
 
 def batchify(args, data, vocabs, unk_rate=0., train=True):
 
     ####################### Question ############################
-    # print(_conc.size()) concept x bsz
     _conc = ListsToTensor([[CLS] + x.attribute['concept'] for x in data], vocabs['concept'],
-                          unk_rate=unk_rate)  # CLS 토큰 다 더해주고 패딩까지 해다.
+                          unk_rate=unk_rate)
 
-    if train == 'Attn':
-        with open("cn_concept.pkl", "wb") as rb:
-            pkl.dump([x.attribute['cn_concept'] for x in data][0], rb, protocol=pkl.HIGHEST_PROTOCOL)
-
-        with open("g_nodes.pkl", 'wb') as rb:
-            pkl.dump([x.attribute['g_nodes'] for x in data][0], rb, protocol=pkl.HIGHEST_PROTOCOL)
-
-        with open("g_edges.pkl", 'wb') as rb:
-            pkl.dump([x.attribute['g_edges'] for x in data][0], rb, protocol=pkl.HIGHEST_PROTOCOL)
-        # print(b.attribute['cn_concept'])
-
-    # print(_conc_char.size()) concept x bsz x concept_char
     _conc_char = ListsofStringToTensor([[CLS] + x.attribute['concept'] for x in data], vocabs['concept_char'])
 
 
-    # "depth": [0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 5]에다가 맨앞에 0을 더해준다. 각 CLS 토큰때문인가보다.
     _depth = ListsToTensor([[0] + x.attribute['depth'] for x in data])
 
     answer_tempelate = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4}
@@ -541,8 +483,6 @@ def batchify(args, data, vocabs, unk_rate=0., train=True):
     abstract = [x.attribute['abstract'] for x in data]
 
     _relation_type, _relation_bank, _relation_length = relation_encoder(vocabs, data, train_flag=train)
-
-
 
     ####################### Options ############################
     _cn_concs = []
