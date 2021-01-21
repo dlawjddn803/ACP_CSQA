@@ -1,6 +1,6 @@
 # I Know What You Asked: Graph Path Learning using AMR for Commonsense Reasoning
 
-Code for our COLING2020 paper
+Code for our [COLING2020 paper](https://www.aclweb.org/anthology/2020.coling-main.222.pdf)
 
 
 
