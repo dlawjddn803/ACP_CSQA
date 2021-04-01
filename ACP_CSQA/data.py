@@ -181,7 +181,7 @@ def relation_encoder(vocabs, data, train_flag=True):
                     path = random.choice(all_path)['edge']
                     if len(path) == 0:  # self loop
                         path = [SEL]
-                    if len(path) < 8:  # too long distance
+                    if len(path) > 8:  # too long distance
                         path = [TL]
 
                     path = tuple(vocabs['relation'].token2idx(path))
@@ -316,7 +316,7 @@ def cn_relation_encoder(args, vocabs, data, train_flag=True):
                         path = random.choice(all_path)['edge']
                         if len(path) == 0:  # self loop
                             path = [SEL]
-                        if len(path) < 8:  # too long distance
+                        if len(path) > 8:  # too long distance
                             path = [TL]
 
                         path = tuple(vocabs['relation'].token2idx(path))
